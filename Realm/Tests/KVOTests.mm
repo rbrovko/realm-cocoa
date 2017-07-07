@@ -1139,6 +1139,8 @@ public:
         AssertChanged(r, @101, @102);
         obj.realmNullableIntCol.value = nil;
         AssertChanged(r, @102, NSNull.null);
+        obj.realmNullableIntCol.value = @103;
+        AssertChanged(r, NSNull.null, @103);
     }
 }
 
@@ -1251,6 +1253,8 @@ public:
         AssertChanged(r, @101, @102);
         obj.realmNullableIntCol.value = nil;
         AssertChanged(r, @102, NSNull.null);
+        obj.realmNullableIntCol.value = @103;
+        AssertChanged(r, NSNull.null, @103);
     }
 }
 

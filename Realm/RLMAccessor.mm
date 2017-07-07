@@ -715,7 +715,6 @@ id RLMAccessorContext::propertyValue(__unsafe_unretained id const obj, size_t pr
     if (prop.subtype != RLMPropertySubtypeInteger
         && [obj isKindOfClass:_info.rlmObjectSchema.objectClass]
         && prop.swiftIvar) {
-#warning TODO: how does Swift interact with RLMInteger? If we don't use a different type we shouldn't need to do anything.
         if (prop.type == RLMPropertyTypeArray) {
             return static_cast<RLMListBase *>(object_getIvar(obj, prop.swiftIvar))._rlmArray;
         }

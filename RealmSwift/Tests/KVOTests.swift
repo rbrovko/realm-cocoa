@@ -49,6 +49,9 @@ class KVOObject: Object {
     @objc dynamic var optBinaryCol: Data?
     @objc dynamic var optDateCol: Date?
 
+    @objc dynamic var realmIntCol = RealmInteger()
+    @objc dynamic var optRealmIntCol: RealmInteger?
+
     override class func primaryKey() -> String { return "pk" }
     override class func ignoredProperties() -> [String] { return ["ignored"] }
 }
@@ -133,6 +136,8 @@ class KVOTests: TestCase {
         observeChange(obj, "doubleCol", 6, 10) { obj.doubleCol = 10 }
         observeChange(obj, "stringCol", "", "abc") { obj.stringCol = "abc" }
         observeChange(obj, "objectCol", nil, obj) { obj.objectCol = obj }
+        observeChange(obj, "realmIntCol", 0, 100) { obj.realmIntCol.value = 100 }
+        observeChange(obj, "realmIntCol", 100, 101) { obj.realmIntCol.incrementValue(by: 1) }
 
         let data = "abc".data(using: String.Encoding.utf8, allowLossyConversion: false)!
         observeChange(obj, "binaryCol", Data(), data) { obj.binaryCol = data }
@@ -154,6 +159,9 @@ class KVOTests: TestCase {
         observeChange(obj, "optStringCol", nil, "abc") { obj.optStringCol = "abc" }
         observeChange(obj, "optBinaryCol", nil, data) { obj.optBinaryCol = data }
         observeChange(obj, "optDateCol", nil, date) { obj.optDateCol = date }
+        observeChange(obj, "optRealmIntCol", nil, 100) { obj.optRealmIntCol = RealmInteger(value: 100) }
+        observeChange(obj, "optRealmIntCol", 100, 200) { obj.optRealmIntCol!.value = 200 }
+        observeChange(obj, "optRealmIntCol", 200, 201) { obj.optRealmIntCol!.incrementValue(by: 1) }
 
         observeChange(obj, "optIntCol", 10, nil) { obj.optIntCol.value = nil }
         observeChange(obj, "optFloatCol", 10 as Float, nil) { obj.optFloatCol.value = nil }
@@ -162,6 +170,7 @@ class KVOTests: TestCase {
         observeChange(obj, "optStringCol", "abc", nil) { obj.optStringCol = nil }
         observeChange(obj, "optBinaryCol", data, nil) { obj.optBinaryCol = nil }
         observeChange(obj, "optDateCol", date, nil) { obj.optDateCol = nil }
+        observeChange(obj, "optRealmIntCol", 201, nil) { obj.optRealmIntCol!.value = nil }
     }
 
     func testAllPropertyTypesPersisted() {
@@ -177,6 +186,9 @@ class KVOTests: TestCase {
         observeChange(obj, "doubleCol", 6, 10) { obj.doubleCol = 10 }
         observeChange(obj, "stringCol", "", "abc") { obj.stringCol = "abc" }
         observeChange(obj, "objectCol", nil, obj) { obj.objectCol = obj }
+        observeChange(obj, "realmIntCol", 0, 100) { obj.realmIntCol.value = 100 }
+        observeChange(obj, "realmIntCol", 100, 200) { obj.realmIntCol = RealmInteger(value: 200) }
+        observeChange(obj, "realmIntCol", 200, 201) { obj.realmIntCol.incrementValue(by: 1) }
 
         let data = "abc".data(using: String.Encoding.utf8, allowLossyConversion: false)!
         observeChange(obj, "binaryCol", Data(), data) { obj.binaryCol = data }
@@ -198,6 +210,9 @@ class KVOTests: TestCase {
         observeChange(obj, "optStringCol", nil, "abc") { obj.optStringCol = "abc" }
         observeChange(obj, "optBinaryCol", nil, data) { obj.optBinaryCol = data }
         observeChange(obj, "optDateCol", nil, date) { obj.optDateCol = date }
+        observeChange(obj, "optRealmIntCol", nil, 100) { obj.optRealmIntCol = RealmInteger(value: 100) }
+        observeChange(obj, "optRealmIntCol", 100, 200) { obj.optRealmIntCol!.value = 200 }
+        observeChange(obj, "optRealmIntCol", 200, 201) { obj.optRealmIntCol!.incrementValue(by: 1) }
 
         observeChange(obj, "optIntCol", 10, nil) { obj.optIntCol.value = nil }
         observeChange(obj, "optFloatCol", 10, nil) { obj.optFloatCol.value = nil }
@@ -206,6 +221,7 @@ class KVOTests: TestCase {
         observeChange(obj, "optStringCol", "abc", nil) { obj.optStringCol = nil }
         observeChange(obj, "optBinaryCol", data, nil) { obj.optBinaryCol = nil }
         observeChange(obj, "optDateCol", date, nil) { obj.optDateCol = nil }
+        observeChange(obj, "optRealmIntCol", 201, nil) { obj.optRealmIntCol!.value = nil }
 
         observeChange(obj, "invalidated", false, true) {
             self.realm.delete(obj)
@@ -232,6 +248,9 @@ class KVOTests: TestCase {
         observeChange(obs, "doubleCol", 6, 10) { obj.doubleCol = 10 }
         observeChange(obs, "stringCol", "", "abc") { obj.stringCol = "abc" }
         observeChange(obs, "objectCol", nil, obj) { obj.objectCol = obj }
+        observeChange(obj, "realmIntCol", 0, 100) { obj.realmIntCol.value = 100 }
+        observeChange(obj, "realmIntCol", 100, 200) { obj.realmIntCol = RealmInteger(value: 200) }
+        observeChange(obj, "realmIntCol", 200, 201) { obj.realmIntCol.incrementValue(by: 1) }
 
         let data = "abc".data(using: String.Encoding.utf8, allowLossyConversion: false)!
         observeChange(obs, "binaryCol", Data(), data) { obj.binaryCol = data }
@@ -253,6 +272,9 @@ class KVOTests: TestCase {
         observeChange(obs, "optStringCol", nil, "abc") { obj.optStringCol = "abc" }
         observeChange(obs, "optBinaryCol", nil, data) { obj.optBinaryCol = data }
         observeChange(obs, "optDateCol", nil, date) { obj.optDateCol = date }
+        observeChange(obj, "optRealmIntCol", nil, 100) { obj.optRealmIntCol = RealmInteger(value: 100) }
+        observeChange(obj, "optRealmIntCol", 100, 200) { obj.optRealmIntCol!.value = 200 }
+        observeChange(obj, "optRealmIntCol", 200, 201) { obj.optRealmIntCol!.incrementValue(by: 1) }
 
         observeChange(obs, "optIntCol", 10, nil) { obj.optIntCol.value = nil }
         observeChange(obs, "optFloatCol", 10, nil) { obj.optFloatCol.value = nil }
@@ -261,6 +283,7 @@ class KVOTests: TestCase {
         observeChange(obs, "optStringCol", "abc", nil) { obj.optStringCol = nil }
         observeChange(obs, "optBinaryCol", data, nil) { obj.optBinaryCol = nil }
         observeChange(obs, "optDateCol", date, nil) { obj.optDateCol = nil }
+        observeChange(obj, "optRealmIntCol", 201, nil) { obj.optRealmIntCol!.value = nil }
 
         observeChange(obs, "invalidated", false, true) {
             self.realm.delete(obj)
