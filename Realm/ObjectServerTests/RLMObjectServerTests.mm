@@ -1304,7 +1304,11 @@
             XCTAssertTrue([[RLMRealm realmWithConfiguration:c error:nil] isEmpty]);
         }
         XCTAssertNil(RLMGetAnyCachedRealmForPath(c.pathOnDisk.UTF8String));
-        [self waitForExpectationsWithTimeout:60.0 handler:nil];
+        if (simulateReconnection) {
+            [self waitForExpectationsWithTimeout:60.0 handler:nil];
+        } else {
+            [self waitForExpectationsWithTimeout:10.0 handler:nil];
+        }
         XCTAssertGreaterThan(fileSize(c.pathOnDisk), sizeBefore);
         XCTAssertNil(RLMGetAnyCachedRealmForPath(c.pathOnDisk.UTF8String));
     } else {
@@ -1322,7 +1326,7 @@
             [realm addObject:[HugeSyncObject object]];
         }
         [realm commitWriteTransaction];
-        [self waitForUploadsForUser:user url:url];
+        [self waitForUploadsForUser:user url:url timeout:simulateReconnection ? 20.0 : 60.0 error:nil];
         CHECK_COUNT(NUMBER_OF_BIG_OBJECTS, HugeSyncObject, realm);
     }
 }
