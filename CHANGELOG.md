@@ -11,6 +11,12 @@
   a Realm Object Server.
 * An error handler can now be registered on `{RLM}SyncUser`s in order to
   report authentication-related errors that affect the user.
+* Add support for `RLMInteger` (Objective-C) and `RealmInteger` (Swift),
+  which expose advanced Realm-specific functionality on integer properties
+  on model objects. Realm integers are interchangeable with normal nullable
+  and non-nullable integer properties, and allow integers to be incremented
+  in a way that preserves changes when a Realm is being used by multiple
+  processes or by multiple synchronized clients.
 
 ### Bugfixes
 
