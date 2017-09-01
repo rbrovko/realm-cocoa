@@ -891,7 +891,7 @@ realm::RowExpr RLMAccessorContext::unbox(__unsafe_unretained id const v, bool cr
 
 bool RLMAccessorContext::is_null(id v) {
     if ([v isKindOfClass:[RLMInteger class]]) {
-        return ![v value];
+        return ![(RLMInteger *)v value];
     }
     return v == NSNull.null;
 }
