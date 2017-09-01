@@ -626,7 +626,7 @@ static void addProperty(Class cls, const char *name, const char *type, size_t si
 
     RealmIntObject *obj = [[RealmIntObject alloc] init];
     obj.realmInt.value = @100;
-    XCTAssertEqual(obj.realmInt.value, @100);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 100);
 
     [realm beginWriteTransaction];
     [realm addObject:obj];
@@ -685,14 +685,14 @@ static void addProperty(Class cls, const char *name, const char *type, size_t si
 
     RealmIntObject *obj = [[RealmIntObject alloc] init];
     obj.realmInt.value = @100;
-    XCTAssertEqual(obj.realmInt.value, @100);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 100);
 
     // Before attachment:
     obj.realmInt.value = @200;
-    XCTAssertEqual(obj.realmInt.value, @200);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 200);
 
     obj.realmInt = [[RLMInteger alloc] initWithValue:@300];
-    XCTAssertEqual(obj.realmInt.value, @300);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 300);
 
     // When attached:
     [realm beginWriteTransaction];
@@ -719,11 +719,11 @@ static void addProperty(Class cls, const char *name, const char *type, size_t si
     RealmIntObject *obj = [[RealmIntObject alloc] init];
     // Getting a RLMInteger property that wasn't initialized should work fine.
     XCTAssertNotNil(obj.realmInt);
-    XCTAssertEqual(obj.realmInt.value, @0);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 0);
 
     // Before attachment:
     obj.realmInt = [[RLMInteger alloc] initWithValue:@101];
-    XCTAssertEqual(obj.realmInt.value, @101);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 101);
 
     // When attached:
     [realm beginWriteTransaction];
@@ -800,17 +800,17 @@ static void addProperty(Class cls, const char *name, const char *type, size_t si
 
     RealmNullableIntObject *obj = [[RealmNullableIntObject alloc] init];
     obj.realmInt.value = @100;
-    XCTAssertEqual(obj.realmInt.value, @100);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 100);
 
     // Before attachment:
     obj.realmInt.value = @200;
-    XCTAssertEqual(obj.realmInt.value, @200);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 200);
 
     obj.realmInt.value = nil;
     XCTAssertNil(obj.realmInt.value);
 
     obj.realmInt = [[RLMInteger alloc] initWithValue:@300];
-    XCTAssertEqual(obj.realmInt.value, @300);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 300);
 
     // When attached:
     [realm beginWriteTransaction];
@@ -874,7 +874,7 @@ static void addProperty(Class cls, const char *name, const char *type, size_t si
     XCTAssertNotNil(obj.realmInt);
     XCTAssertEqual(obj.realmInt.value.integerValue, 0);
     obj.realmInt = [[RLMInteger alloc] initWithValue:@101];
-    XCTAssertEqual(obj.realmInt.value, @101);
+    XCTAssertEqual(obj.realmInt.value.integerValue, 101);
 
     // When attached:
     [realm beginWriteTransaction];
